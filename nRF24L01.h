@@ -25,32 +25,33 @@
 */
 
 /* Memory Map */
-#define CONFIG      0x00
-#define EN_AA       0x01
-#define EN_RXADDR   0x02
-#define SETUP_AW    0x03
-#define SETUP_RETR  0x04
-#define RF_CH       0x05
-#define RF_SETUP    0x06
-#define STATUS      0x07
-#define OBSERVE_TX  0x08
-#define CD          0x09
-#define RX_ADDR_P0  0x0A
-#define RX_ADDR_P1  0x0B
-#define RX_ADDR_P2  0x0C
-#define RX_ADDR_P3  0x0D
-#define RX_ADDR_P4  0x0E
-#define RX_ADDR_P5  0x0F
-#define TX_ADDR     0x10
-#define RX_PW_P0    0x11
-#define RX_PW_P1    0x12
-#define RX_PW_P2    0x13
-#define RX_PW_P3    0x14
-#define RX_PW_P4    0x15
-#define RX_PW_P5    0x16
-#define FIFO_STATUS 0x17
-#define DYNPD       0x1C
-
+enum nrf24_regs {
+    NRF24_REG_CONFIG      = 0x00,
+    NRF24_REG_EN_AA       = 0x01,
+    NRF24_REG_EN_RXADDR   = 0x02,
+    NRF24_REG_SETUP_AW    = 0x03,
+    NRF24_REG_SETUP_RETR  = 0x04,
+    NRF24_REG_RF_CH       = 0x05,
+    NRF24_REG_SETUP    = 0x06,
+    NRF24_REG_STATUS  = 0x07,
+    NRF24_REG_OBSERVE_TX  = 0x08,
+    NRF24_REG_CD          = 0x09,
+    NRF24_REG_RX_ADDR_P0  = 0x0A,
+    NRF24_REG_RX_ADDR_P1  = 0x0B,
+    NRF24_REG_RX_ADDR_P2  = 0x0C,
+    NRF24_REG_RX_ADDR_P3  = 0x0D,
+    NRF24_REG_RX_ADDR_P4  = 0x0E,
+    NRF24_REG_RX_ADDR_P5  = 0x0F,
+    NRF24_REG_TX_ADDR     = 0x10,
+    NRF24_REG_RX_PW_P0    = 0x11,
+    NRF24_REG_RX_PW_P1    = 0x12,
+    NRF24_REG_RX_PW_P2    = 0x13,
+    NRF24_REG_RX_PW_P3    = 0x14,
+    NRF24_REG_RX_PW_P4    = 0x15,
+    NRF24_REG_RX_PW_P5    = 0x16,
+    NRF24_REG_FIFO_STATUS = 0x17,
+    NRF24_REG_DYNPD       = 0x1C,
+};
 /* Bit Mnemonics */
 
 /* configuratio nregister */
@@ -117,14 +118,14 @@
 #define DPL_P5      5
 
 /* Instruction Mnemonics */
-#define R_REGISTER    0x00 /* last 4 bits will indicate reg. address */
-#define W_REGISTER    0x20 /* last 4 bits will indicate reg. address */
-#define REGISTER_MASK 0x1F
-#define R_RX_PAYLOAD  0x61
-#define W_TX_PAYLOAD  0xA0
-#define FLUSH_TX      0xE1
-#define FLUSH_RX      0xE2
-#define REUSE_TX_PL   0xE3
-#define ACTIVATE      0x50 
-#define R_RX_PL_WID   0x60
-#define NOP           0xFF
+#define NRF24_R_REGISTER    0x00 /* last 4 bits will indicate reg. address */
+#define NRF24_W_REGISTER    0x20 /* last 4 bits will indicate reg. address */
+#define NRF24_REGISTER_MASK 0x1F
+#define NRF24_R_RX_PAYLOAD  0x61
+#define NRF24_W_TX_PAYLOAD  0xA0
+#define NRF24_FLUSH_TX      0xE1
+#define NRF24_FLUSH_RX      0xE2
+#define NRF24_REUSE_TX_PL   0xE3
+#define NRF24_ACTIVATE      0x50 
+#define NRF24_R_RX_PL_WID   0x60
+#define NRF24_NOP           0xFF
