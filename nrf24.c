@@ -350,3 +350,28 @@ void nrf24_writeRegister(uint8_t reg, uint8_t* value, uint8_t len)
     nrf24_transmitSync(value,len);
     nrf24_csn_digitalWrite(HIGH);
 }
+
+
+#define RF_SETUP_PWR_MASK 3
+#define RF_SETUP_PWR_OFFSET 1
+
+void nrf24_set_power(enum nrf24_tx_power pwr)
+{
+    uint8_t rf_setup;
+    nrf24_readRegister(NRF24_REG_SETUP, &rf_setup, 1);
+    rf_setup = (rf_setup & ~(RF_SETUP_PWR_MASK << RF_SETUP_PWR_OFFSET)) 
+            + (uint8_t)((pwr & RF_SETUP_PWR_MASK) << RF_SETUP_PWR_OFFSET);
+    nrf24_writeRegister(NRF24_REG_SETUP, &rf_setup, 1);
+}
+
+#define RF_SETUP_DR_MASK 3
+#define RF_SETUP_DR_OFFSET 3
+
+void nrf24_set_data_rate(enum nrf24_data_rate dr)
+{
+    uint8_t rf_setup;
+    nrf24_readRegister(NRF24_REG_SETUP, &rf_setup, 1);
+    rf_setup = (rf_setup & ~(RF_SETUP_DR_MASK << RF_SETUP_DR_OFFSET)) 
+            + (uint8_t)((dr & RF_SETUP_DR_MASK) << RF_SETUP_DR_OFFSET);
+    nrf24_writeRegister(NRF24_REG_SETUP, &rf_setup, 1);
+}
