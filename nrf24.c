@@ -264,6 +264,8 @@ void nrf24_powerDown()
     nrf24_configRegister(NRF24_REG_CONFIG,nrf24_CONFIG);
 }
 
+#if NRF24_HW_SPI == 1
+#else
 /* software spi routine */
 uint8_t spi_transfer(uint8_t tx)
 {
@@ -299,7 +301,7 @@ uint8_t spi_transfer(uint8_t tx)
 
     return rx;
 }
-
+#endif
 /* send and receive multiple bytes over SPI */
 void nrf24_transferSync(uint8_t* dataout,uint8_t* datain,uint8_t len)
 {
