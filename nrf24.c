@@ -223,7 +223,7 @@ uint8_t nrf24_lastMessageStatus()
     /* Transmission went OK */
     if((rv & ((1 << TX_DS))))
     {
-        return NRF24_TRANSMISSON_OK;
+        return NRF24_TRANSMISSION_OK;
     }
     /* Maximum retransmission count is reached */
     /* Last message probably went missing ... */

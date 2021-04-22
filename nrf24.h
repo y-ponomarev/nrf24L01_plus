@@ -23,7 +23,7 @@
 #define nrf24_ADDR_LEN 5
 #define nrf24_CONFIG ((1<<EN_CRC)|(1<<CRCO))
 
-#define NRF24_TRANSMISSON_OK 0
+#define NRF24_TRANSMISSION_OK 0
 #define NRF24_MESSAGE_LOST   1
 
 /* adjustment functions */
@@ -62,7 +62,9 @@ enum nrf24_tx_power {
     NRF24_PWR_18DB = 0,
     NRF24_PWR_12DB = 1,
     NRF24_PWR_6DB = 2,
-    NRF24_PWR_0DB = 3
+    NRF24_PWR_0DB = 3,
+    NRF24_PWR_MIN = NRF24_PWR_18DB,
+    NRF24_PWR_MAX = NRF24_PWR_0DB,
 };
 
 void nrf24_set_power(enum nrf24_tx_power pwr);
