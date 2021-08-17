@@ -35,13 +35,13 @@ void nrf24_config(uint8_t channel, uint8_t pay_length)
     // Set length of incoming payload 
     nrf24_configRegister(NRF24_REG_RX_PW_P0, 0x00); // Auto-ACK pipe ...
     nrf24_configRegister(NRF24_REG_RX_PW_P1, payload_len); // Data payload pipe
-    nrf24_configRegister(NRF24_REG_RX_PW_P2, 0x00); // Pipe not used 
-    nrf24_configRegister(NRF24_REG_RX_PW_P3, 0x00); // Pipe not used 
-    nrf24_configRegister(NRF24_REG_RX_PW_P4, 0x00); // Pipe not used 
-    nrf24_configRegister(NRF24_REG_RX_PW_P5, 0x00); // Pipe not used 
+    nrf24_configRegister(NRF24_REG_RX_PW_P2, 0x00); // Pipe not used
+    nrf24_configRegister(NRF24_REG_RX_PW_P3, 0x00); // Pipe not used
+    nrf24_configRegister(NRF24_REG_RX_PW_P4, 0x00); // Pipe not used
+    nrf24_configRegister(NRF24_REG_RX_PW_P5, 0x00); // Pipe not used
 
-    // 1 Mbps, TX gain: 0dbm
-    nrf24_configRegister(NRF24_REG_SETUP, (0<<RF_DR)|((0x03)<<RF_PWR));
+    // 250kbps, TX gain: 0dbm
+    nrf24_configRegister(NRF24_REG_SETUP, (NRF24_DR_DEFAULT<<RF_DR)|((NRF24_PWR_DEFAULT)<<RF_PWR));
 
     // CRC enable, 1 byte CRC length
     nrf24_configRegister(NRF24_REG_CONFIG,nrf24_CONFIG);
@@ -373,7 +373,32 @@ void nrf24_set_data_rate(enum nrf24_data_rate dr)
 {
     uint8_t rf_setup;
     nrf24_readRegister(NRF24_REG_SETUP, &rf_setup, 1);
-    rf_setup = (rf_setup & ~(RF_SETUP_DR_MASK << RF_SETUP_DR_OFFSET)) 
-            + (uint8_t)((dr & RF_SETUP_DR_MASK) << RF_SETUP_DR_OFFSET);
+    
+    #define RF_SETUP_DR_LOW 0x20
+    #define RF_SETUP_DR_HIGH 0x08
+/*
+[RF_DR_LOW, RF_DR_HIGH]:
+‘00’ – 1Mbps
+‘01’ – 2Mbps
+‘10’ – 250kbps
+‘11’ – Reserved
+*/    
+    switch(dr) {
+        case NRF24_DR_250K:
+            rf_setup |= RF_SETUP_DR_LOW;
+            rf_setup &= ~RF_SETUP_DR_HIGH;
+            break;
+        case NRF24_DR_1M:
+            rf_setup &= ~RF_SETUP_DR_LOW;
+            rf_setup &= ~RF_SETUP_DR_HIGH;
+            break;            
+        case NRF24_DR_2M:
+            rf_setup &= ~RF_SETUP_DR_LOW;
+            rf_setup |= RF_SETUP_DR_HIGH;
+            break;            
+    }
+    
+//    rf_setup = (rf_setup & ~(RF_SETUP_DR_MASK << RF_SETUP_DR_OFFSET)) 
+//            + (uint8_t)((dr & RF_SETUP_DR_MASK) << RF_SETUP_DR_OFFSET);
     nrf24_writeRegister(NRF24_REG_SETUP, &rf_setup, 1);
 }

@@ -65,14 +65,17 @@ enum nrf24_tx_power {
     NRF24_PWR_0DB = 3,
     NRF24_PWR_MIN = NRF24_PWR_18DB,
     NRF24_PWR_MAX = NRF24_PWR_0DB,
+    NRF24_PWR_DEFAULT = NRF24_PWR_MIN,
 };
 
 void nrf24_set_power(enum nrf24_tx_power pwr);
 
 enum nrf24_data_rate {
-    NRF24_DR_250K = 2,
+    NRF24_DR_250K = 4,
     NRF24_DR_1M = 0,
     NRF24_DR_2M = 1,
+    NRF24_DR_DEFAULT = NRF24_DR_250K
+    //NRF24_DR_DEFAULT = NRF24_DR_1M
 };
 
 void nrf24_set_data_rate(enum nrf24_data_rate dr);
